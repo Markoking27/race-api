@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.takima.race.registration.entities.registration;
 
 public interface registrationRepository extends JpaRepository<registration, Long> {
-    long countByRaceId(Long raceId);
+    Long countByRaceId(Long raceId);
 
 }

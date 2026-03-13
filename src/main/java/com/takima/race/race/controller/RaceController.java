@@ -43,13 +43,13 @@ public class RaceController {
         return this.raceService.create(race);
     }
 
-    /*@GetMapping("/{raceId}/participants/count")
+    @GetMapping("/{raceId}/participants/count")
     public String getParticipantsCount(@PathVariable Long raceId){
 
-        long count = raceService.getParticipantsCount(raceId);
+        Long count = raceService.getParticipantsCount(raceId);
 
-        return "count :"+count ;
-    }*/
+        return "count : "+count ;
+    }
 
 
 }

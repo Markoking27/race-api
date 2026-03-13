@@ -38,18 +38,10 @@ public class RaceService {
     }
 
 
-    /*public long getParticipantsCount(Long raceId){
-
-    // vérifier que la race existe
-    raceRepository.findById(raceId).orElseThrow(() ->
-            new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Race not found"
-            )
-    );
-
-    return registrationRepository.countByRaceId(raceId);
-}*/
+    public Long getParticipantsCount(Long raceId){
+        this.getById(raceId); //verifie si la course existe 
+        return registrationRepository.countByRaceId(raceId);
+}
 
 }
 
