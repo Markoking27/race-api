@@ -1,5 +1,6 @@
 package com.takima.race.race.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -8,17 +9,22 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.takima.race.race.entities.Race;
 import com.takima.race.race.repesitories.RaceRepository;
-import com.takima.race.registration.repositories.registrationRepository;
+import com.takima.race.registration.entities.Registration;
+import com.takima.race.registration.repositories.RegistrationRepository;
+import com.takima.race.runner.entities.Runner;
+import com.takima.race.runner.repositories.RunnerRepository;
 
 
 @Service
 public class RaceService {
     private final RaceRepository raceRepository; 
-    private final registrationRepository registrationRepository;
+    private final RegistrationRepository registrationRepository;
+    private final RunnerRepository runnerRepository;
 
-    public RaceService(RaceRepository raceRepository,  registrationRepository registrationRepository) {
+    public RaceService(RaceRepository raceRepository,  RegistrationRepository registrationRepository, RunnerRepository runnerRepository) {
         this.raceRepository = raceRepository;
         this.registrationRepository = registrationRepository; 
+        this.runnerRepository = runnerRepository; 
     }
 
     public List<Race> getAll(){
@@ -42,6 +48,21 @@ public class RaceService {
         this.getById(raceId); //verifie si la course existe 
         return registrationRepository.countByRaceId(raceId);
 }
+
+    public Registration createRegistration(Long raceId, Long runnerId){
+        Race race = raceRepository.findById(raceId)
+            .orElseThrow(() -> new RuntimeException("Race not found"));
+        // verifie si la course existe
+
+        Runner runner = runnerRepository.findById(runnerId)
+            .orElseThrow(() -> new RuntimeException("Runner not found"));
+        // verifie si le runner existe
+
+        Registration registration = new Registration(race, LocalDate.now(), runner); 
+
+        return this.registrationRepository.save(registration);
+        
+    }
 
 }
 

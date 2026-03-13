@@ -13,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class registration {
+public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,16 @@ public class registration {
 
     @JoinColumn(name = "registration_date")
     private LocalDate registrationDate;
+
+    //constructeurs 
+
+    public Registration(Race race, LocalDate registrationDate, Runner runner) {
+        this.race = race;
+        this.registrationDate = registrationDate;
+        this.runner = runner;
+    }
+
+
 
     // getters & setters
 

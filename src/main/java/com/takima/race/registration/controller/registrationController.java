@@ -1,5 +1,10 @@
 package com.takima.race.registration.controller;
 
-public class registrationController {
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/registration")
+public class RegistrationController {
 
 }

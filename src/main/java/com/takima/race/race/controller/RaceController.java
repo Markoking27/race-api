@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.takima.race.race.entities.Race;
 import com.takima.race.race.service.RaceService;
+import com.takima.race.registration.entities.Registration;
 
 
 
@@ -49,6 +50,12 @@ public class RaceController {
         Long count = raceService.getParticipantsCount(raceId);
 
         return "count : "+count ;
+    }
+
+    @GetMapping("races/{raceId}/registrations")
+    public Registration create(@PathVariable Long raceId,@RequestBody Long runnerId ){
+        return this.raceService.createRegistration(raceId, runnerId) ; 
+
     }
 
 

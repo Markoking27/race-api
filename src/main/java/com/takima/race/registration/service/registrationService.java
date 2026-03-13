@@ -1,5 +1,9 @@
 package com.takima.race.registration.service;
 
-public class registrationService {
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class RegistrationService {
 
 }
