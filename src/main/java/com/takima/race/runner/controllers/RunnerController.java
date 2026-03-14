@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takima.race.race.entities.Race;
 import com.takima.race.runner.entities.Runner;
 import com.takima.race.runner.services.RunnerService;
 
@@ -36,6 +37,12 @@ public class RunnerController {
         @RequestBody Runner runner
     ) {
         return runnerService.create(runner);
+    }
+
+    @GetMapping("/{runnerId}/races")
+    public List<Race> RaceOfRunner(@PathVariable Long runnerId){
+        return this.runnerService.RaceofRunner(runnerId); 
+        
     }
 
 

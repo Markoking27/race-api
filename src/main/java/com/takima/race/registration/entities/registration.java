@@ -39,6 +39,14 @@ public class Registration {
     }
 
 
+    /// constructeurs obligatoires en sping 
+    public Registration() {
+    }
+
+
+
+
+
 
     // getters & setters
 

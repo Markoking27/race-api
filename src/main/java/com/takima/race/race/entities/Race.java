@@ -15,7 +15,22 @@ public class Race {
     private String name; 
     private LocalDate date; 
     private String location; 
-    private int max_participants;
+    private int maxParticipants;
+
+    public Race() {
+    }
+
+    public Race(LocalDate date, Long id, String location, int maxParticipants, String name) {
+        this.date = date;
+        this.id = id;
+        this.location = location;
+        this.maxParticipants = maxParticipants;
+        this.name = name;
+    }
+
+
+
+
 
     ///getters et setters 
 
@@ -43,11 +58,11 @@ public class Race {
     public void setLocation(String location) {
         this.location = location;
     }
-    public int getMax_participants() {
-        return max_participants;
+    public int getMaxParticipants() {
+        return maxParticipants;
     }
-    public void setMax_participants(int max_participants) {
-        this.max_participants = max_participants;
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
     }
 
     

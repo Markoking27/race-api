@@ -2,6 +2,7 @@ package com.takima.race.race.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,37 @@ public class RaceService {
 
         return this.registrationRepository.save(registration);
         
+    }
+
+    public List<Runner> RunnerOfRace(Long RaceId){
+        List <Registration> registration = registrationRepository.findByRaceId(RaceId);
+        // liste de toutes inscriptions a la course
+
+        return registration.stream()
+                        .map(Registration::getRunner)
+                        .collect(Collectors.toList());
+        // recupere la liste des runners de inscriptions 
+
+    }
+
+    public Race UpdateRace(Long raceId, Race race){
+
+        /// recuperer et verifier si la course que l'on veut modifier existe 
+        Race existRace = raceRepository.findById(raceId).orElseThrow(() ->
+                new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        String.format("Race is not found", raceId)
+                )
+        );
+
+        // modifier les champs de l'ancienne par ceux présent dans le body
+        existRace.setName(race.getName());
+        existRace.setDate(race.getDate()); 
+        existRace.setLocation(race.getLocation());
+        existRace.setMaxParticipants(race.getMaxParticipants());
+
+         // Sauvegarder les modifications
+        return raceRepository.save(existRace);
     }
 
 }
