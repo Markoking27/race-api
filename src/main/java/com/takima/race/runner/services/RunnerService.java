@@ -51,5 +51,31 @@ public class RunnerService {
         // recupere la liste des runners de inscriptions 
     }
 
+    public void delete(Long id){
+        Runner runner = runnerRepository.findById(id).orElseThrow(() ->
+            new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                String.format("Runner %s not found", id)
+            )
+        );
+        runnerRepository.delete(runner);
+    }
+
+    public Runner update(Long id, Runner runnerData) {
+
+    Runner runner = runnerRepository.findById(id).orElseThrow(() ->
+                    new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            String.format("Runner %s not found", id)
+                    )
+            );
+
+    runner.setFirstName(runnerData.getFirstName());
+    runner.setLastName(runnerData.getLastName());
+    runner.setEmail(runnerData.getEmail());
+    runner.setAge(runnerData.getAge());
+
+    return runnerRepository.save(runner);
+}
 
 }

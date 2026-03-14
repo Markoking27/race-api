@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.takima.race.race.entities.Race;
-import com.takima.race.race.repesitories.RaceRepository;
+import com.takima.race.race.repositories.RaceRepository;
 import com.takima.race.registration.entities.Registration;
 import com.takima.race.registration.repositories.RegistrationRepository;
 import com.takima.race.runner.entities.Runner;
