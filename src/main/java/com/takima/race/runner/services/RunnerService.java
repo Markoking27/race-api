@@ -38,11 +38,19 @@ public class RunnerService {
     }
 
     public Runner create(Runner runner){
-        return runnerRepository.save(runner);
+
+    if (runner.getEmail() == null || !runner.getEmail().contains("@")) {
+        throw new ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Email must contain @"
+        );
     }
 
+    return runnerRepository.save(runner);
+}
+
     public List<Race> RaceofRunner(Long runnerId){
-        List <Registration> registration = registrationRepository.findByRaceId(runnerId);
+        List <Registration> registration = registrationRepository.findByRunnerId(runnerId);
         // liste de toutes inscriptions a la course
 
         return registration.stream()
@@ -63,12 +71,21 @@ public class RunnerService {
 
     public Runner update(Long id, Runner runnerData) {
 
+    //Validation course 
     Runner runner = runnerRepository.findById(id).orElseThrow(() ->
                     new ResponseStatusException(
                             HttpStatus.NOT_FOUND,
                             String.format("Runner %s not found", id)
                     )
             );
+    
+        //Validation email
+    if (runnerData.getEmail() == null || !runnerData.getEmail().contains("@")) {
+        throw new ResponseStatusException(
+            HttpStatus.BAD_REQUEST,
+            "Email must contain @"
+        );
+    }
 
     runner.setFirstName(runnerData.getFirstName());
     runner.setLastName(runnerData.getLastName());

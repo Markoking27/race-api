@@ -1,11 +1,16 @@
 package com.takima.race.runner.entities;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.takima.race.registration.entities.Registration;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Runner {
@@ -18,6 +23,9 @@ public class Runner {
     private String lastName;
     private String email;
     private Integer age;
+
+    @OneToMany(mappedBy = "runner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Registration> registrations;
 
     @Override
     public boolean equals(Object o) {

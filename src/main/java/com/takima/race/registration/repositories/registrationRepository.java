@@ -10,7 +10,9 @@ import com.takima.race.registration.entities.Registration;
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     Long countByRaceId(Long raceId);
-    List<Registration> findByRaceId(Long raceId);
+    List<Registration> findByRunnerId(Long runnerId);
+    List<Registration> findByRaceId(Long RaceId);
+
 
     boolean existsByRaceIdAndRunnerId(Long raceId, Long runnerId);
 }
