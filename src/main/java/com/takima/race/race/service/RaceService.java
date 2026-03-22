@@ -50,20 +50,38 @@ public class RaceService {
         return registrationRepository.countByRaceId(raceId);
 }
 
-    public Registration createRegistration(Long raceId, Long runnerId){
-        Race race = raceRepository.findById(raceId)
-            .orElseThrow(() -> new RuntimeException("Race not found"));
-        // verifie si la course existe
+public Registration createRegistration(Long raceId, Long runnerId){
+    Race race = raceRepository.findById(raceId)
+        .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                String.format("Race %s not found", raceId)
+        ));
 
-        Runner runner = runnerRepository.findById(runnerId)
-            .orElseThrow(() -> new RuntimeException("Runner not found"));
-        // verifie si le runner existe
+    Runner runner = runnerRepository.findById(runnerId)
+        .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                String.format("Runner %s not found", runnerId)
+        ));
 
-        Registration registration = new Registration(race, LocalDate.now(), runner); 
-
-        return this.registrationRepository.save(registration);
-        
+    if (registrationRepository.existsByRaceIdAndRunnerId(raceId, runnerId)) {
+        throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "Runner is already registered for this race"
+        );
     }
+
+    Long participantsCount = registrationRepository.countByRaceId(raceId);
+    if (participantsCount >= race.getMaxParticipants()) {
+        throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "Race is full"
+        );
+    }
+
+    Registration registration = new Registration(race, LocalDate.now(), runner);
+
+    return this.registrationRepository.save(registration);
+}
 
     public List<Runner> RunnerOfRace(Long RaceId){
         List <Registration> registration = registrationRepository.findByRaceId(RaceId);

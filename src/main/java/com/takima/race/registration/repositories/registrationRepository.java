@@ -12,4 +12,5 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
     Long countByRaceId(Long raceId);
     List<Registration> findByRaceId(Long raceId);
 
+    boolean existsByRaceIdAndRunnerId(Long raceId, Long runnerId);
 }
